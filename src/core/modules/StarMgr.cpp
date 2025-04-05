@@ -196,7 +196,7 @@ StarMgr::~StarMgr(void)
 // Allow untranslated name here if set in constellationMgr!
 QString StarMgr::getCommonName(StarId hip)
 {
-	static StelSkyCultureMgr* cmgr=GETSTELMODULE(StelSkyCultureMgr);
+	//static StelSkyCultureMgr* cmgr=GETSTELMODULE(StelSkyCultureMgr);
 	//// TODO: This function will likely go away, or prepare for use in InfoString context
 	//if (cmgr->getScreenLabelStyle() == StelObject::CulturalDisplayStyle::Native)
 	//	return getCommonEnglishName(hip);
@@ -1791,7 +1791,11 @@ QStringList StarMgr::listMatchingObjects(const QString& objPrefix, int maxNbItem
 		//	}
 		//}
 
+#if  (QT_VERSION<QT_VERSION_CHECK(6,0,0))
+		QMapIterator<QString, StarId>it(culturalNamesIndex);
+#else
 		QMultiMapIterator<QString, StarId>it(culturalNamesIndex);
+#endif
 		while (it.hasNext())
 		{
 			it.next();
@@ -1961,11 +1965,11 @@ QStringList StarMgr::listMatchingObjects(const QString& objPrefix, int maxNbItem
 	while (itv.hasNext())
 	{
 		itv.next();
-		if (it.key().startsWith(objPrefixUpper))
+		if (itv.key().startsWith(objPrefixUpper))
 		{
 			if (maxNbItem<=0)
 				break;
-			result << getGcvsName(it.value());
+			result << getGcvsName(itv.value());
 			--maxNbItem;
 		}
 		else
@@ -2194,7 +2198,11 @@ void StarMgr::updateSkyCulture(const StelSkyCulture& skyCulture)
 	QSet<int>excludeRefs;
 	if (!exclude.isEmpty())
 	{
+#if  (QT_VERSION<QT_VERSION_CHECK(5,14,0))
+		const QStringList excludeRefStrings = exclude.split(",", QString::SkipEmptyParts);
+#else
 		const QStringList excludeRefStrings = exclude.split(",", Qt::SkipEmptyParts);
+#endif
 		//qInfo() << "Skyculture" << skyCulture.id << "configured to exclude references" << excludeRefStrings;
 		for (const QString &s: excludeRefStrings)
 		{
@@ -2485,9 +2493,8 @@ QStringList StarMgr::getCultureLabels(StarId hip, StelObject::CulturalDisplaySty
 			labels << label;
 		}
 	labels.removeDuplicates();
-	int nullStrIdx=labels.indexOf("");
-	if (nullStrIdx>=0)
-		labels.remove(nullStrIdx);
+	labels.removeAll(QString(""));
+	labels.removeAll(QString());
 	return labels;
 }
 
