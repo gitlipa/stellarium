@@ -49,15 +49,6 @@ environment:
   - BUILD_NAME: Win64 Qt5.15
     APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
     VSPATH: C:\Program Files\Microsoft Visual Studio\2022\Community\SDK\ScopeCppSDK\vc15\VC\bin
-    qtver: 5.15
-    qtbin: msvc2019_64
-    msvcname: Visual Studio 17 2022
-    cmake_args: -A x64
-    exiv2url: https://github.com/Exiv2/exiv2/releases/download/v0.28.0/exiv2-0.28.0-2019msvc64.zip
-    exiv2baseName: exiv2-0.28.0-2019msvc64
-    scConverterEnabled: 0
-  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
-    VSPATH: C:\Program Files\Microsoft Visual Studio\2022\Community\SDK\ScopeCppSDK\vc15\VC\bin
     qtver: 6.5
     qtbin: msvc2019_arm64
     msvcname: Visual Studio 17 2022
