@@ -2217,7 +2217,6 @@ void StarMgr::updateSkyCulture(const StelSkyCulture& skyCulture)
 		}
 		if (skyCulture.fallbackToInternationalNames)
 		{
-
 			StelObject::CulturalName cName{englishName, QString(), QString(),
 						englishName, englishName, englishNameI18n, QString()};
 			//if (culturalNamesMap.contains(HIP))
