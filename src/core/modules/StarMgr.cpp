@@ -748,11 +748,7 @@ StarMgr::CommonNames StarMgr::loadCommonNames(const QString& commonNameFile) con
 		{
 			// The record is the right format.  Extract the fields
 			bool ok;
-#if QT_VERSION >= QT_VERSION_CHECK(6,0,0)
 			StarId hip = recMatch.captured(1).toULongLong(&ok);
-#else
-			StarId hip = recMatch.captured(1).toULongLong(&ok);
-#endif
 			if (!ok)
 			{
 				qWarning().noquote() << "Parse error at line" << lineNumber << "in" << QDir::toNativeSeparators(commonNameFile)
